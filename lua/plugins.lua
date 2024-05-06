@@ -1,5 +1,6 @@
 return {
     'marko-cerovac/material.nvim',
+    'rstacruz/vim-closer',
     {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate'
