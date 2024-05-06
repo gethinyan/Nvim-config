@@ -1,4 +1,17 @@
-return {
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    vim.fn.system({
+        'git',
+        'clone',
+        '--filter=blob:none',
+        'https://github.com/folke/lazy.nvim.git',
+        '--branch=stable', -- latest stable release
+        lazypath
+    })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require('lazy').setup({
     'marko-cerovac/material.nvim',
     'rstacruz/vim-closer',
     {
@@ -67,4 +80,26 @@ return {
         'neoclide/coc.nvim',
         branch = 'release'
     }
-}
+})
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+-- empty setup using defaults
+require('nvim-tree').setup({
+    sort_by = 'case_sensitive',
+    hijack_cursor = true
+})
+
+require('bufferline').setup({
+    options = {
+        diagnostics = 'nvim_lsp',
+        offsets = {
+            {
+                filetype = 'NvimTree',
+                text = 'File Explorer',
+                highlight = 'Directory',
+                text_align = 'left'
+            }
+        }
+    }
+})
